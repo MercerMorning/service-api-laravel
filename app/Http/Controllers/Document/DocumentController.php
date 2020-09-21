@@ -30,7 +30,7 @@ class DocumentController extends Controller
      *
      * Получение по id
      */
-    public function get($id)
+    public function get(string $id)
     {
         $document = Document::find((string)Crypt::decrypt($id));
         return response($document->toArray());
@@ -43,9 +43,9 @@ class DocumentController extends Controller
      *
      * Первое редактирование
      */
-    public function update($id, Request $request)
+    public function update(string $id, Request $request)
     {
-        $document = Document::find(Crypt::decrypt($id));
+        $document = Document::find((string)Crypt::decrypt($id));
         if ($document->status == 'published' || $request->payload == null) {
             return response()->json(['error' => true], 400);
         }
@@ -83,7 +83,7 @@ class DocumentController extends Controller
      *
      * Публикация
      */
-    public function publish(int $id)
+    public function publish(string $id)
     {
         $document = new Document();
         $document = $document->find(Crypt::decrypt($id));

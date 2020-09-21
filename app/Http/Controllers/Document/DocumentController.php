@@ -115,6 +115,8 @@ class DocumentController extends Controller
         foreach ($documents as $document) {
             $documentList['document'][] = Document::find((int)$document->id)->toArray();
         }
+        $documentList = array_reverse($documentList['document']);
+        return $documentList;
         $result = array_merge($documentList, $pagination);
         return response($result);
     }
